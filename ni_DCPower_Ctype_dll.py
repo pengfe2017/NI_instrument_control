@@ -25,7 +25,7 @@ dll.niDCPower_Initiate(vi)
 dll.niDCPower_ConfigureOutputEnabled(vi, c_string('0'), c_bool(True))
 
 
-# some update
+#%% some update
 
 from ctypes import c_bool, c_int, c_double, c_char_p, byref, windll, cdll
 from ctypes.util import find_library
@@ -34,3 +34,21 @@ def c_string(s):
         return c_char_p(str(s).encode('utf-8'))
 lib_name = find_library('nidcpower_32')
 dll = cdll.LoadLibrary(lib_name)
+
+#%% working scripts
+
+from ctypes import c_bool, c_int, c_double, c_char_p, byref, windll, cdll
+from ctypes.util import find_library
+import time
+
+def c_string(s):
+        return c_char_p(str(s).encode('utf-8'))
+
+lib_name = find_library('nidcpower_32')
+dll = windll.LoadLibrary(lib_name)#C:\Program Files\IVI Foundation\IVI\Bin\nidcpower_32.dll
+vi = c_int(0)
+dll.niDCPower_InitializeWithChannels(c_string('PXI1Slot7'), c_string('0'), c_bool(True), c_string(''), byref(vi))
+dll.niDCPower_ConfigureOutputFunction(vi, c_string('0'), c_int(1006))
+dll.niDCPower_ConfigureVoltageLevel(vi, c_string('0'),c_double(3.1))
+dll.niDCPower_Initiate(vi)
+dll.niDCPower_ConfigureOutputEnabled(vi, c_string('0'), c_bool(True))
